@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="itens %282%29.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\itens %282%29.png" />
+  </ItemGroup>
+
+</Project>

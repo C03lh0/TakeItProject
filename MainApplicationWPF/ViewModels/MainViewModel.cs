@@ -7,31 +7,24 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace MainApplicationWPF.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        public RelayCommand OpenList { get; set; }
-        public RelayCommand RefreshWindow { get; set; }
-        public RelayCommand RegisterOrUpdateItemToList { get; set; }
+        public Command OpenList { get; private set; }
+        public Command RefreshWindow { get; private set; }
+        public Command RegisterOrUpdateItemToList { get; private set; }
         private IRepositoryService repositoryService;
         public List<BorrowedItem> ListBorrowedItens { get; set; }
 
-
-        private string _textTest;
-        public string TextTeste
-        {
-            get { return _textTest; }
-            set { OnPropertyChanged(nameof(_textTest)); }
-        }
-
         public MainViewModel()
         {
-            OpenList = new RelayCommand(ShowList);
-            RefreshWindow = new RelayCommand(GetAllListBorrwedItem);
-            RegisterOrUpdateItemToList = new RelayCommand(RegisterAndUpdateItem);
+            OpenList = new Command(ShowList);
+            RefreshWindow = new Command(GetAllListBorrwedItem);
+            RegisterOrUpdateItemToList = new Command(RegisterAndUpdateItem);
             repositoryService = new RepositoryService();
         }
 
@@ -47,7 +40,7 @@ namespace MainApplicationWPF.ViewModels
 
         public void ShowList()
         {
-            _textTest = "Sobre";
+            
         }
 
 

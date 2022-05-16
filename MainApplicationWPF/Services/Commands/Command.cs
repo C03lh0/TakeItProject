@@ -7,18 +7,12 @@ using System.Windows.Input;
 
 namespace MainApplicationWPF.Services.Commands
 {
-    public class RelayCommand : ICommand
+    public class Command : ICommand
     {
         private Action _execute;
+        public event EventHandler CanExecuteChanged;
 
-        public event EventHandler CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
-        }
-
-
-        public RelayCommand(Action execute)
+        public Command(Action execute)
         {
             _execute = execute;
         }

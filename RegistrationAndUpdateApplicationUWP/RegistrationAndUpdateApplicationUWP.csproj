@@ -122,7 +122,15 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\BorrowedItem.cs" />
+    <Compile Include="Models\NullObjectBorrowedItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BorrowedItemRepository.cs" />
+    <Compile Include="Services\BorrowedItemService.cs" />
+    <Compile Include="Services\IBorrowedItemRepository.cs" />
+    <Compile Include="Services\IBorrowedItemService.cs" />
+    <Compile Include="ViewModels\BorrowedItemFormViewModel.cs" />
+    <Compile Include="ViewModels\BorrowedItemListViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\BorrowedItemFormView.xaml.cs">
       <DependentUpon>BorrowedItemFormView.xaml</DependentUpon>
@@ -171,9 +179,7 @@
       <Version>6.2.12</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

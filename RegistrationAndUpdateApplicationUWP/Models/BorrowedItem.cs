@@ -14,6 +14,7 @@ namespace RegistrationAndUpdateApplicationUWP.Models
         public DateTime LoanDate { get; set; }
         public DateTime ReturnDate { get; set; }
         public DateTime RegistrationDate { get; set; }
+        public string ImagePath { get; set; }
 
 
         public BorrowedItem()
@@ -21,7 +22,7 @@ namespace RegistrationAndUpdateApplicationUWP.Models
 
         }
 
-        public BorrowedItem(int id, string name, string description, DateTime loanDate, DateTime returnDate, DateTime registrationDate)
+        /*public BorrowedItem(int id, string name, string description, DateTime loanDate, DateTime returnDate, DateTime registrationDate)
         {
             ID = id;
             Name = name;
@@ -29,6 +30,6 @@ namespace RegistrationAndUpdateApplicationUWP.Models
             LoanDate = loanDate;
             ReturnDate = returnDate;
             RegistrationDate = registrationDate;
-        }
+        }*/
     }
 }

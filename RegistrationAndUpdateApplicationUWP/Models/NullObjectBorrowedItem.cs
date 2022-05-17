@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RegistrationAndUpdateApplicationUWP.ViewModels
+namespace RegistrationAndUpdateApplicationUWP.Models
 {
-    public class BorrowedItemListViewModel : ViewModelBase
+    public class NullObjectBorrowedItem : BorrowedItem
     {
+
     }
 }

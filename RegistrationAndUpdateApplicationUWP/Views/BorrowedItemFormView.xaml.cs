@@ -1,4 +1,5 @@
-﻿using RegistrationAndUpdateApplicationUWP.ViewModels;
+﻿using RegistrationAndUpdateApplicationUWP.Services;
+using RegistrationAndUpdateApplicationUWP.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,7 +27,7 @@ namespace RegistrationAndUpdateApplicationUWP.Views
         public BorrowedItemFormViewModel ViewModel => (BorrowedItemFormViewModel)DataContext;
         public BorrowedItemFormView()
         {
-            DataContext = new BorrowedItemFormViewModel();
+            DataContext = new BorrowedItemFormViewModel(new BorrowedItemService());
             this.InitializeComponent();
         }
     }

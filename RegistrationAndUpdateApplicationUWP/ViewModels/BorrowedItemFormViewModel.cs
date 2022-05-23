@@ -2,17 +2,24 @@
 using RegistrationAndUpdateApplicationUWP.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
+using Windows.Storage;
+using Windows.Storage.Pickers;
 
 namespace RegistrationAndUpdateApplicationUWP.ViewModels
 {
     public class BorrowedItemFormViewModel : ViewModelBase
     {
         private BorrowedItem model;
-        private readonly IBorrowedItemService borrowedItemService;
+        private readonly IBorrowedItemService _borrowedItemService;
 
+        public int ID { get; set; }
+        public string DaysLeftForReturn => ReturnDate.Subtract(LoanDate).Days.ToString();
 
         private string _name;
         public string Name
@@ -36,8 +43,8 @@ namespace RegistrationAndUpdateApplicationUWP.ViewModels
             }
         }
 
-        private DateTime _loanDate;
-        public DateTime LoanDate
+        private DateTimeOffset _loanDate;
+        public DateTimeOffset LoanDate
         {
             get { return _loanDate; }
             set
@@ -47,8 +54,8 @@ namespace RegistrationAndUpdateApplicationUWP.ViewModels
             }
         }
 
-        private DateTime _returnDate;
-        public DateTime ReturnDate
+        private DateTimeOffset _returnDate;
+        public DateTimeOffset ReturnDate
         {
             get { return _returnDate; }
             set
@@ -58,60 +65,98 @@ namespace RegistrationAndUpdateApplicationUWP.ViewModels
             }
         }
 
-        private string _imagePath;
-        public string ImagePath
+        private ObservableCollection<StorageFile> _image;
+        public ObservableCollection<StorageFile> Image
         {
-            get { return _imagePath; }
+            get { return _image; }
             set
             {
-                _imagePath = value;
-                OnPropertyChanged(nameof(ImagePath));
+                _image = value;
+                OnPropertyChanged(nameof(Image));
             }
         }
 
-        public BorrowedItemFormViewModel()
+        private string _imageString;
+        public string ImageString
         {
-            borrowedItemService = new BorrowedItemService();
+            get { return _imageString; }
+            set 
+            {
+                _imageString = value;
+                OnPropertyChanged(nameof(ImageString));
+            }
+        }
+
+        public BorrowedItemFormViewModel(IBorrowedItemService borrowedItemService)
+        {
+            model = new NullObjectBorrowedItem();
+            _image = new ObservableCollection<StorageFile>();
+            _borrowedItemService = borrowedItemService;
+            Initialization();
+        }
+
+        private async void Initialization()
+        {
+            await LoadBorrowedItemAsync();
         }
 
         public async void AddImage()
         {
-           
+            var picker = new FileOpenPicker();
+            picker.ViewMode = PickerViewMode.Thumbnail;
+            picker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+            picker.FileTypeFilter.Add(".jpg");
+            picker.FileTypeFilter.Add(".jpeg");
+            picker.FileTypeFilter.Add(".png");
+
+            var file = await picker.PickSingleFileAsync();
+            Image.Clear();
+            Image.Add(file);
         }
 
-        public void RegistrateOrSave()
+        public async void RegistrateOrUpdate()
         {
-
+           ID = await _borrowedItemService.CreateAsync(ID, Name, Description, LoanDate, ReturnDate, Image);
+           CoreApplication.GetCurrentView().CoreWindow.Close();
         }
 
         public async void Delete()
         {
-
+            bool deleteSucess = await _borrowedItemService.Delete(ID);
         }
 
         public void Cancel()
         {
-
+            CoreApplication.GetCurrentView().CoreWindow.Close();
         }
 
-        private async Task LoadBorrowedItemAsync(int id)
+        private async Task LoadBorrowedItemAsync()
         {
-            if(id != 0)
+            if(ID != 0)
             {
-                model = await borrowedItemService.FindAsync(id);
+                model = await _borrowedItemService.FindAsync(ID);
+            }
+            _name = model.Name;
+            _description = model.Description;
+            _loanDate = model.LoanDate.Date;
+            _returnDate = model.LoanDate.Date;
+            await LoadBorrowedItemImage();
+        }
 
-                Name = model.Name;
-                Description = model.Description;
-                LoanDate = model.LoanDate.Date;
-                ReturnDate = model.LoanDate.Date;
-                ImagePath = model.ImagePath;
+        private async Task LoadBorrowedItemImage()
+        {
+            if (model is NullObjectBorrowedItem)
+            {
+                var uriNullObjectImage = new Uri(model.ImagePath);
+                var find = await StorageFile.GetFileFromApplicationUriAsync(uriNullObjectImage);
+                Image.Add(find);
             }
             else
             {
-
+                var path = Path.Combine("Images", model.ImagePath);
+                var finded = await ApplicationData.Current.LocalFolder.GetFileAsync(path);
+                Image.Add(finded);
             }
-            
-
         }
     }
 }

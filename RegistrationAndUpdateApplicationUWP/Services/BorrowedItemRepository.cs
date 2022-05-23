@@ -10,7 +10,7 @@ namespace RegistrationAndUpdateApplicationUWP.Services
     public class BorrowedItemRepository : IBorrowedItemRepository
     {
         
-        public Task DaleteAsync(BorrowedItem product)
+        public Task<bool> DeleteAsync(int id)
         {
             throw new NotImplementedException();
         }
@@ -20,12 +20,12 @@ namespace RegistrationAndUpdateApplicationUWP.Services
             throw new NotImplementedException();
         }
 
-        public Task SaveAsync(BorrowedItem product)
+        public Task<int> SaveAsync(BorrowedItem product)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(BorrowedItem product)
+        public Task UpdateAsync(int id, BorrowedItem product)
         {
             throw new NotImplementedException();
         }

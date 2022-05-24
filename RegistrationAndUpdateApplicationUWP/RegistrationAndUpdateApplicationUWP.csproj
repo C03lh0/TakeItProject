@@ -132,6 +132,7 @@
     <Compile Include="Services\IBorrowedItemService.cs" />
     <Compile Include="ViewModels\BorrowedItemFormViewModel.cs" />
     <Compile Include="ViewModels\BorrowedItemListViewModel.cs" />
+    <Compile Include="ViewModels\BorrowedItemViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\BorrowedItemFormView.xaml.cs">
       <DependentUpon>BorrowedItemFormView.xaml</DependentUpon>

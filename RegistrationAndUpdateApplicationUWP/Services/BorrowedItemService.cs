@@ -52,8 +52,8 @@ namespace RegistrationAndUpdateApplicationUWP.Services
         }
         public Task<bool> Delete(int id) => _borrowedItemRepository.DeleteAsync(id);
         public Task<BorrowedItem> FindAsync(int id) => _borrowedItemRepository.FindAsync(id);
-
-       
+        public async Task<List<BorrowedItem>> GetAllBorrowedItem()=> await _borrowedItemRepository.ListAsync();
+        
     }
 
 

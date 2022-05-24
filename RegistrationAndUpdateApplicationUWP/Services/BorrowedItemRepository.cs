@@ -20,6 +20,11 @@ namespace RegistrationAndUpdateApplicationUWP.Services
             throw new NotImplementedException();
         }
 
+        public Task<List<BorrowedItem>> ListAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<int> SaveAsync(BorrowedItem product)
         {
             throw new NotImplementedException();

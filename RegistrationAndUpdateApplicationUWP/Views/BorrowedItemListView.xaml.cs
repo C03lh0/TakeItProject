@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RegistrationAndUpdateApplicationUWP.Services;
+using RegistrationAndUpdateApplicationUWP.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,8 +24,10 @@ namespace RegistrationAndUpdateApplicationUWP.Views
     /// </summary>
     public sealed partial class BorrowedItemListView : Page
     {
+        public BorrowedItemListViewModel ViewModel => (BorrowedItemListViewModel)DataContext;
         public BorrowedItemListView()
         {
+            DataContext = new BorrowedItemListViewModel();
             this.InitializeComponent();
         }
     }

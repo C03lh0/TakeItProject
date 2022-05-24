@@ -10,12 +10,13 @@ namespace RegistrationAndUpdateApplicationUWP.Models
     {
         public NullObjectBorrowedItem()
         {
-            base.ID = 0;
-            base.Name = "Nome do objeto";
-            base.Description = "Descrição do objeto";
-            base.LoanDate = DateTimeOffset.Now;
-            base.ReturnDate = DateTimeOffset.Now;
-            base.ImagePath = "ms-appx:///Assets/Image/order.png";
+            ID = 0;
+            Name = "Nome do objeto";
+            Description = "Descrição do objeto";
+            LoanDate = DateTimeOffset.Now;
+            ReturnDate = DateTimeOffset.Now;
+            ImagePath = "ms-appx:///Assets/Image/order.png";
+            RegistrationDate = DateTimeOffset.Now;
         }
     }
 }

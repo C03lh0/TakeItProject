@@ -15,5 +15,6 @@ namespace RegistrationAndUpdateApplicationUWP.Services
         Task UpdateAsync(int id, BorrowedItem product);
         Task<bool> DeleteAsync(int id);
         Task<BorrowedItem> FindAsync(int id);
+        Task<List<BorrowedItem>> ListAsync();
     }
 }

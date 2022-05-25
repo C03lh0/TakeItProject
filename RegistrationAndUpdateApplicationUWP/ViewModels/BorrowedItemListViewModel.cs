@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 
 namespace RegistrationAndUpdateApplicationUWP.ViewModels
 {
@@ -31,20 +32,32 @@ namespace RegistrationAndUpdateApplicationUWP.ViewModels
             items = new ObservableCollection<BorrowedItemViewModel>()
             {
                 new BorrowedItemViewModel(borrowedItem),
-                new BorrowedItemViewModel(borrowedItem)
+                new BorrowedItemViewModel(borrowedItem),
+                new BorrowedItemViewModel(borrowedItem),
+                new BorrowedItemViewModel(borrowedItem),
+                new BorrowedItemViewModel(borrowedItem),
+                new BorrowedItemViewModel(borrowedItem),
+                new BorrowedItemViewModel(borrowedItem),
+                new BorrowedItemViewModel(borrowedItem),
             };
-            
-            //items.Add()
-            //InitializeItens();
+            //InitializeItems();
         }
 
-        /*private async void InitializeItens()
+        public void OpenDetailsBorrowedItem(object sender, ItemClickEventArgs e)
+        {
+            if(e.ClickedItem is BorrowedItem item)
+            {
+                var id = item.ID;
+            }
+        }
+
+        private async void InitializeItems()
         {
             var borrowedItems = await _borrowedItemService.GetAllBorrowedItem();
 
             var list = borrowedItems.Select(i => new BorrowedItemViewModel(i));
 
             Items = new ObservableCollection<BorrowedItemViewModel>(list);
-        }*/
+        }
     }
 }

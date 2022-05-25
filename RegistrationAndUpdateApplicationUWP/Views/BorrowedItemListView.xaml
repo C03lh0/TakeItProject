@@ -5,7 +5,9 @@
     xmlns:local="using:RegistrationAndUpdateApplicationUWP.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:viewmodels="using:RegistrationAndUpdateApplicationUWP.ViewModels"
+    xmlns:viewmodels="using:RegistrationAndUpdateApplicationUWP.ViewModels" 
+    xmlns:converters="using:RegistrationAndUpdateApplicationUWP.Converters" 
+    xmlns:storage="using:Windows.Storage"
     mc:Ignorable="d"
     Background="#FF013750">
 
@@ -14,38 +16,35 @@
             <Grid MaxHeight="100" DataContextChanged="{x:Bind LoadImage}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="150"/>
-                    <ColumnDefinition Width="450"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="300"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 
                 <Border Grid.Column="0" Width="150" Height="100">
-                    <Canvas Height="100" Width="100">
+                    <Canvas Height="80" Width="100">
                         <Canvas.Background>
                             <ImageBrush ImageSource="{x:Bind Thumbnail, Mode=OneWay}" Stretch="Uniform"/>
                         </Canvas.Background>
                     </Canvas>
                 </Border>
 
-                <StackPanel Grid.Column="1">
-                    <TextBlock Text="{x:Bind Name}" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Left" Foreground="Black" Margin="0,0,0,6" LineHeight="10"/>
-                    <TextBlock Margin="0,0,0,0" Grid.Column="2" Text="{x:Bind Description}" TextAlignment="Justify" Foreground="Black" FontFamily="Segoe UI" FontWeight="Normal" TextWrapping="Wrap" FontSize="16"/>
-
-                    <TextBlock FontSize="12" Foreground="Black" Margin="0,5,0,0" FontWeight="SemiBold" HorizontalAlignment="Left">
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock Text="{x:Bind Name}" FontSize="15" FontWeight="SemiBold" HorizontalAlignment="Left" Foreground="Black" Margin="0,0,0,6" TextWrapping="Wrap" />
+                    <TextBlock FontSize="12" Foreground="Black" Margin="0,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom">
                                     <Run Text="{x:Bind LoanDate}"/>
                                     <Run Text=" a "/>
                                     <Run Text="{x:Bind ReturnDate}"/>
                     </TextBlock>
                 </StackPanel>
-
-                <TextBlock Grid.Column="2" Foreground="Black" Text="{x:Bind RegistrationDate}" VerticalAlignment="Bottom" Margin="20,0,0,0"/>
+                <TextBlock Padding="5" Grid.Column="2" Text="{x:Bind Description}" TextAlignment="Left" Foreground="Black" FontFamily="Segoe UI" FontWeight="SemiBold" TextWrapping="Wrap" FontSize="12"/>
+                <TextBlock Grid.Column="3" Foreground="Black" Text="{x:Bind RegistrationDate}" VerticalAlignment="Bottom" Margin="20,0,0,0" FontFamily="Segoe UI" FontWeight="Normal" FontSize="12"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>
 
     <Grid Background="#FFFEF5C8" MaxHeight="700" MaxWidth="1140" CornerRadius="10">
         <TextBlock Padding ="0,10" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="20,0,0,0" Text="Lisa de Objetos Emprestados" FontSize="20" FontFamily="Microsoft YaHei" Foreground="#FF2C6B74" MaxWidth="229" TextWrapping="Wrap" TextAlignment="Center" FontWeight="Bold"/>
-
-        <ListView ItemsSource="{x:Bind ViewModel.Items}" ItemTemplate="{StaticResource TemplateListView}" Background="Transparent" BorderBrush="Transparent" Margin="0,70,0,0" Height="500" Width="800"/>
-
+        <ListView SelectionMode="None" ItemClick="{x:Bind ViewModel.OpenDetailsBorrowedItem}" IsItemClickEnabled="True" ItemsSource="{x:Bind ViewModel.Items}" ItemTemplate="{StaticResource TemplateListView}" Background="Transparent" BorderBrush="Transparent" Margin="0,70,0,0" Height="500" Width="800"/>
     </Grid>
 </Page>

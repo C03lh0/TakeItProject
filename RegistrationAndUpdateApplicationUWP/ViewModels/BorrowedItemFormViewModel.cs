@@ -16,6 +16,7 @@ namespace RegistrationAndUpdateApplicationUWP.ViewModels
     public class BorrowedItemFormViewModel : ViewModelBase
     {
         private BorrowedItem model;
+        private AppShell _currentAppShell;
         private readonly IBorrowedItemService _borrowedItemService;
 
         public int ID { get; set; }
@@ -87,12 +88,17 @@ namespace RegistrationAndUpdateApplicationUWP.ViewModels
             }
         }
 
-        public BorrowedItemFormViewModel(IBorrowedItemService borrowedItemService)
+        public BorrowedItemFormViewModel()
         {
             model = new NullObjectBorrowedItem();
             _image = new ObservableCollection<StorageFile>();
-            _borrowedItemService = borrowedItemService;
+            _borrowedItemService = new BorrowedItemService();
             Initialization();
+        }
+
+        public BorrowedItemFormViewModel(AppShell currentAppShell) : this()
+        {
+            _currentAppShell = currentAppShell;
         }
 
         private async void Initialization()
@@ -117,7 +123,7 @@ namespace RegistrationAndUpdateApplicationUWP.ViewModels
         public async void RegistrateOrUpdate()
         {
            ID = await _borrowedItemService.CreateAsync(ID, Name, Description, LoanDate, ReturnDate, Image);
-           CoreApplication.GetCurrentView().CoreWindow.Close();
+           //CoreApplication.GetCurrentView().CoreWindow.Close();
         }
 
         public async void Delete()
@@ -127,7 +133,7 @@ namespace RegistrationAndUpdateApplicationUWP.ViewModels
 
         public void Cancel()
         {
-            CoreApplication.GetCurrentView().CoreWindow.Close();
+            //CoreApplication.GetCurrentView().CoreWindow.Close();
         }
 
         private async Task LoadBorrowedItemAsync()

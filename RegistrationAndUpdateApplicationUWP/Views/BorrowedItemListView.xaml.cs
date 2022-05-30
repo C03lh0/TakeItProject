@@ -30,5 +30,12 @@ namespace RegistrationAndUpdateApplicationUWP.Views
             DataContext = new BorrowedItemListViewModel();
             this.InitializeComponent();
         }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            AppShell currentAppShell = (AppShell)e.Parameter;
+            DataContext = new BorrowedItemListViewModel(currentAppShell);
+        }
     }
 }

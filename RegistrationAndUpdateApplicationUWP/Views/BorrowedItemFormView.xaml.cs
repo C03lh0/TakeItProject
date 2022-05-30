@@ -27,8 +27,16 @@ namespace RegistrationAndUpdateApplicationUWP.Views
         public BorrowedItemFormViewModel ViewModel => (BorrowedItemFormViewModel)DataContext;
         public BorrowedItemFormView()
         {
-            DataContext = new BorrowedItemFormViewModel(new BorrowedItemService());
+            DataContext = new BorrowedItemFormViewModel();
             this.InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+
+            base.OnNavigatedTo(e);
+            AppShell currentAppShell = (AppShell)e.Parameter;
+            DataContext = new BorrowedItemFormViewModel(currentAppShell);
         }
     }
 }

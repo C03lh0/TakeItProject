@@ -1,5 +1,6 @@
 ﻿using RegistrationAndUpdateApplicationUWP.Models;
 using RegistrationAndUpdateApplicationUWP.Services;
+using RegistrationAndUpdateApplicationUWP.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,6 +13,7 @@ namespace RegistrationAndUpdateApplicationUWP.ViewModels
 {
     public class BorrowedItemListViewModel : ViewModelBase
     {
+        private AppShell _currentAppShell;
         private readonly IBorrowedItemService _borrowedItemService;
 
         private ObservableCollection<BorrowedItemViewModel> items;
@@ -40,6 +42,12 @@ namespace RegistrationAndUpdateApplicationUWP.ViewModels
                 new BorrowedItemViewModel(borrowedItem),
                 new BorrowedItemViewModel(borrowedItem),
             };
+        }
+
+        public BorrowedItemListViewModel(AppShell currentAppShell) : this()
+        {
+            _currentAppShell = currentAppShell;
+           
             //InitializeItems();
         }
 
@@ -48,6 +56,7 @@ namespace RegistrationAndUpdateApplicationUWP.ViewModels
             if(e.ClickedItem is BorrowedItem item)
             {
                 var id = item.ID;
+                //_currentAppShell.MainFrame.Navigate(typeof(BorrowedItemFormView), id);
             }
         }
 

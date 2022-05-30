@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RegistrationAndUpdateApplicationUWP.Views;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,11 +21,26 @@ namespace RegistrationAndUpdateApplicationUWP
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class AppShell : Page
     {
-        public MainPage()
+        public AppShell()
         {
             this.InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            if(e.Parameter.ToString() == "BorrowedItemFormView")
+            {
+                _ = MainFrame.Navigate(typeof(BorrowedItemFormView), this);
+            }
+            else
+            {
+                _ = MainFrame.Navigate(typeof(BorrowedItemListView), this);
+            }
+           
         }
     }
 }

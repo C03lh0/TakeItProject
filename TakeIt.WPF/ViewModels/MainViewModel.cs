@@ -15,10 +15,9 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using TakeIt.Commos;
 using TakeIt.Domain.Interface;
-using TakeIt.Models;
+using TakeIt.Domain.Models;
+using TakeIt.Infra.Data.Repository;
 using TakeIt.Services.Commands;
-using TakeIt.Services.Services;
-using TakeIt.WPF.Models;
 using TakeIt.WPF.Services;
 using TakeIt.WPF.ViewModels;
 
@@ -31,7 +30,7 @@ namespace TakeIt.ViewModels
         public Command RegisterBorrowedItem { get; private set; }
         public List<BorrowedItem> ListBorrowedItens { get; set; }
         private IBorrowedItemService<BorrowedItem> _borrowedItemService;
-        private IBorrowedItemRepository<BorrowedItem> _borrowedItemRepository = new BorrowedItemRepository<BorrowedItem>();
+        private readonly IBorrowedItemRepository<BorrowedItem> _borrowedItemRepository = new BorrowedItemRepository<BorrowedItem>();
 
         private string thumbnail;
         public string Thumbnail

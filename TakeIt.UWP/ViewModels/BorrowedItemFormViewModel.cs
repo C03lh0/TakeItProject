@@ -7,8 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TakeIt.Domain.Entities;
 using TakeIt.Domain.Interface;
-using TakeIt.Services.Services;
-using TakeIt.UWP.Models;
+using TakeIt.Domain.Models;
+using TakeIt.Infra.Data.Repository;
 using TakeIt.UWP.Services;
 using TakeIt.UWP.Views;
 using Windows.ApplicationModel.Core;
@@ -158,7 +158,7 @@ namespace TakeIt.UWP.ViewModels
         public async void Registrate()
         {
             BorrowedItem borrowedItem = CreateBorrowedItem();
-            ID = await _borrowedItemService.Add(borrowedItem, Image);
+            _borrowedItemService.Add(borrowedItem, Image);
         }
 
         public async void Update()
@@ -181,7 +181,7 @@ namespace TakeIt.UWP.ViewModels
 
         public async void Delete()
         {
-            bool deleteSucess = await _borrowedItemService.Remove(ID);
+            _borrowedItemService.Remove(ID);
         }
 
         public void Cancel()

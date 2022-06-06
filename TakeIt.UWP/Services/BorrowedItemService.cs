@@ -8,8 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using TakeIt.Domain.Entities;
 using TakeIt.Domain.Interface;
-using TakeIt.Services.Services;
-using TakeIt.UWP.Models;
 using Windows.Storage;
 
 namespace TakeIt.UWP.Services
@@ -25,34 +23,41 @@ namespace TakeIt.UWP.Services
         }
 
 
-        public async Task<int> Add(TEntity obj, ObservableCollection<StorageFile> filesImage)
+        public async void Add(TEntity obj, ObservableCollection<StorageFile> filesImage)
         {
             var completeObject = await SaveImage(obj, filesImage);
-            try
-            {
-                return await _borrowedItemRepository.SaveAsync(completeObject);
-            }
-            catch
-            {
-                //Chamar Dialog Service
-                return 0;
-            }
+            bool saved = await _borrowedItemRepository.SaveAsync(completeObject);
+
+            VerifyIfExecuted(saved);
         }
 
         public async Task Change(TEntity obj, ObservableCollection<StorageFile> filesImage)
         {
             var completeObject = await SaveImage(obj, filesImage);
-            try
+            bool changed = await _borrowedItemRepository.UpdateAsync(completeObject);
+
+            VerifyIfExecuted(changed);
+        }
+
+        public async void Remove(int id)
+        {
+            bool removed = await _borrowedItemRepository.DeleteAsync(id);
+            VerifyIfExecuted(removed);
+        }
+
+        private static void VerifyIfExecuted(bool saved)
+        {
+            if (saved)
             {
-                await _borrowedItemRepository.UpdateAsync(completeObject);
+                //Chamar Dialog Service
             }
-            catch (Exception)
+            else
             {
                 //Chamar Dialog Service
             }
         }
 
-        private static async Task<TEntity> SaveImage(TEntity obj, ObservableCollection<StorageFile> filesImage)
+        private async Task<TEntity> SaveImage(TEntity obj, ObservableCollection<StorageFile> filesImage)
         {
             var destFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("Images", CreationCollisionOption.OpenIfExists);
             var imageToBeSaved = filesImage.FirstOrDefault();
@@ -62,8 +67,11 @@ namespace TakeIt.UWP.Services
             return obj;
         }
 
-        public Task<bool> Remove(int id) => _borrowedItemRepository.DeleteAsync(id);
-        public Task<TEntity> FindAsync(int id) => _borrowedItemRepository.FindAsync(id);
+        
+        public async Task<TEntity> FindAsync(int id)
+        {
+           return await _borrowedItemRepository.FindAsync(id);
+        }
         public async Task<List<TEntity>> GetList()=> await _borrowedItemRepository.ListAsync();
         
     }

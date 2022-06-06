@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TakeIt.UWP.Models;
+using TakeIt.Domain.Models;
 using Windows.Storage;
 using Windows.UI.Xaml.Media.Imaging;
 

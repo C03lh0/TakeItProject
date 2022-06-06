@@ -10,9 +10,9 @@ namespace TakeIt.Domain.Interface
 {
     public interface IBorrowedItemServiceUWP <TEntity> : IBorrowedItemService <TEntity> where TEntity : BaseEntity
     {
-        Task<bool> Remove(int id);
+        void Remove(int id);
         Task<TEntity> FindAsync(int id);
         Task Change(TEntity obj, ObservableCollection<StorageFile> filesImage);
-        Task<int> Add(TEntity obj, ObservableCollection<StorageFile> filesImage);
+        void Add(TEntity obj, ObservableCollection<StorageFile> filesImage);
     }
 }

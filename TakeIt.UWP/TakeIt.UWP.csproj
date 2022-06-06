@@ -123,8 +123,6 @@
     <Compile Include="AppShell.xaml.cs">
       <DependentUpon>AppShell.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\BorrowedItem.cs" />
-    <Compile Include="Models\NullObjectBorrowedItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BorrowedItemService.cs" />
     <Compile Include="ViewModels\BorrowedItemFormViewModel.cs" />
@@ -194,6 +192,10 @@
     <ProjectReference Include="..\TakeIt.Domain\TakeIt.Domain.csproj">
       <Project>{D40066CD-0D4D-49B3-810B-86CF78D6CDF1}</Project>
       <Name>TakeIt.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TakeIt.Infra.Data\TakeIt.Infra.Data.csproj">
+      <Project>{21402C6D-F9F8-4A04-9AEB-BF7E1D8A9DB3}</Project>
+      <Name>TakeIt.Infra.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\TakeIt.Services\TakeIt.Services.csproj">
       <Project>{E3E641E4-309A-48B5-AF8E-F5E3279B4032}</Project>

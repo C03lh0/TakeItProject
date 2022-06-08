@@ -30,11 +30,6 @@ namespace TakeIt.UWP.ViewModels
             }
         }
 
-        public BorrowedItemListViewModel()
-        {
-            
-        }
-
         public BorrowedItemListViewModel(AppShell currentAppShell)
         {
             _currentAppShell = currentAppShell;

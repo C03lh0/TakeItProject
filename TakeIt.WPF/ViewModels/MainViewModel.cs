@@ -25,11 +25,12 @@ namespace TakeIt.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
+        private readonly int _maximumItems;
         public Command OpenList { get; private set; }
         public Command RefreshWindow { get; private set; }
         public Command RegisterBorrowedItem { get; private set; }
         public List<BorrowedItem> ListBorrowedItens { get; set; }
-        private IBorrowedItemService<BorrowedItem> _borrowedItemService;
+        private readonly IBorrowedItemService<BorrowedItem> _borrowedItemService;
         private readonly IBorrowedItemRepository<BorrowedItem> _borrowedItemRepository = new BorrowedItemRepository<BorrowedItem>();
 
         private string thumbnail;
@@ -45,27 +46,22 @@ namespace TakeIt.ViewModels
 
         public MainViewModel()
         {
+            _maximumItems = 5;
             OpenList = new Command(ShowList);
             RegisterBorrowedItem = new Command(Register);
             RefreshWindow = new Command(GetAllListBorrwedItem);
-            _borrowedItemService = new BorrowedItemService<BorrowedItem>(_borrowedItemRepository);
-            ListBorrowedItens = new List<BorrowedItem>();
+            _borrowedItemService = new BorrowedItemService<BorrowedItem>(_borrowedItemRepository, _maximumItems);
             GetAllListBorrwedItem();
         }
 
         public async void  GetAllListBorrwedItem()
         {
-            try
+            ListBorrowedItens = await _borrowedItemService.GetList();
+            
+            if(ListBorrowedItens == null)
             {
-                ListBorrowedItens.Clear();
-                ListBorrowedItens = await _borrowedItemService.GetList();
-            }
-            catch(Exception)
-            {
-                ListBorrowedItens.Clear();
-                var nullItem = new NullObjectBorrowedItem();
-                ListBorrowedItens.Add(nullItem);
-            }
+                ListBorrowedItens = new List<BorrowedItem> { new NullObjectBorrowedItem() };
+            }        
         }
 
         public void Register()
@@ -77,8 +73,5 @@ namespace TakeIt.ViewModels
         {
             Process.Start($"com.takeituwp://?page={PageTokens.BorrowedItemListView}");
         }
-
-
-
     }
 }

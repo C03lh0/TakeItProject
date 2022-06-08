@@ -20,7 +20,7 @@ namespace TakeIt.UWP.ViewModels
     public class BorrowedItemFormViewModel : ViewModelBase
     {
         private BorrowedItem model;
-        private AppShell _currentAppShell;
+        private readonly AppShell _currentAppShell;
         private readonly IBorrowedItemServiceUWP <BorrowedItem> _borrowedItemService;
         private readonly IBorrowedItemRepository<BorrowedItem> _borrowedItemRepository = new BorrowedItemRepository<BorrowedItem>();
 
@@ -110,17 +110,17 @@ namespace TakeIt.UWP.ViewModels
 
         private async Task LoadBorrowedItemAsync()
         {
-            try
-            {
-                var item = await _borrowedItemService.FindAsync(ID);
-                model = item;
-            }
-            catch
+            var findedItem = await _borrowedItemService.FindAsync(ID);
+            if (findedItem == null) 
             {
                 _name = model.Name;
                 _description = model.Description;
-                _loanDate = model.LoanDate.Date;
-                _returnDate = model.LoanDate.Date;
+                _loanDate = model.LoanDate;
+                _returnDate = model.LoanDate;
+            }
+            else
+            {
+                model = findedItem;
             }
             await LoadBorrowedItemImage();
         }
@@ -143,22 +143,34 @@ namespace TakeIt.UWP.ViewModels
 
         public async void AddImage()
         {
-            var picker = new FileOpenPicker();
-            picker.ViewMode = PickerViewMode.Thumbnail;
-            picker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+            var picker = new FileOpenPicker
+            {
+                ViewMode = PickerViewMode.Thumbnail,
+                SuggestedStartLocation = PickerLocationId.PicturesLibrary
+            };
             picker.FileTypeFilter.Add(".jpg");
             picker.FileTypeFilter.Add(".jpeg");
             picker.FileTypeFilter.Add(".png");
 
             var file = await picker.PickSingleFileAsync();
-            Image.Clear();
-            Image.Add(file);
+
+            if(file != null)
+            {
+                Image.Clear();
+                Image.Add(file);
+            }
+            else
+            {
+                Image.Clear();
+                await LoadBorrowedItemImage();
+            }
+            
         }
 
         public async void Registrate()
         {
             BorrowedItem borrowedItem = CreateBorrowedItem();
-            _borrowedItemService.Add(borrowedItem, Image);
+            await _borrowedItemService.Add(borrowedItem, Image);
         }
 
         public async void Update()
@@ -181,7 +193,7 @@ namespace TakeIt.UWP.ViewModels
 
         public async void Delete()
         {
-            _borrowedItemService.Remove(ID);
+           await _borrowedItemService.Remove(ID);
         }
 
         public void Cancel()

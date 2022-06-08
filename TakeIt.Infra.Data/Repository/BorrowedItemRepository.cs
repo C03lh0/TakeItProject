@@ -35,7 +35,7 @@ namespace TakeIt.Infra.Data.Repository
             TEntity finded;
             try
             {
-                finded = applicationContext.Set<TEntity>().Find(id);
+                finded = await applicationContext.Set<TEntity>().FindAsync(id);
             }
             catch (Exception)
             {
@@ -48,7 +48,7 @@ namespace TakeIt.Infra.Data.Repository
         {
             try
             {
-                applicationContext.Set<TEntity>().Add(product);
+                await applicationContext.Set<TEntity>().AddAsync(product);
                 applicationContext.SaveChanges();
                 return true;
             }
@@ -63,6 +63,7 @@ namespace TakeIt.Infra.Data.Repository
             try
             {
                 applicationContext.Set<TEntity>().Update(product);
+                applicationContext.SaveChanges();
                 return true;
             }
             catch (Exception)
@@ -71,24 +72,30 @@ namespace TakeIt.Infra.Data.Repository
             }
         }
 
-        public async Task<IList<TEntity>> ToListAsyncMaxItem(int quantity)
+        public async Task<List<TEntity>> ToListMaximumItemsAsync(int quantity)
         {
             var listItems = await ListAsync();
+            var descendingList = listItems.OrderByDescending(item => item.ID);
 
             List<TEntity> listMax = new List<TEntity>();
-            if (listItems != null)
+            if (listItems.Count != 0)
             {
                 for (int i = 0; i < quantity; i++)
                 {
-                    listMax.Add((TEntity)listItems.ToArray().GetValue(i));
+                    listMax.Add((TEntity)descendingList.ToArray().GetValue(i));
                 }
-            } else
+            } 
+            else
             {
                 return null;
             }
             return listMax;
         }
 
-        public async Task<List<TEntity>> ListAsync() => applicationContext.Set<TEntity>().ToList();
+        public async Task<List<TEntity>> ListAsync()
+        {
+            List<TEntity> list = applicationContext.Set<TEntity>().ToList();
+            return list;
+        }
     }
 }

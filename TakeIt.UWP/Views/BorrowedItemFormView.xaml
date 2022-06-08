@@ -24,7 +24,7 @@
 
         <converters:StorageFileImageConverter x:Key="StorageFileImageConverter"/>
         <DataTemplate x:Key="ThumbinailBorrowedItem" x:DataType="storage:StorageFile">
-            <Image Height="200" Width="200" Stretch="UniformToFill" Source="{x:Bind Converter={StaticResource StorageFileImageConverter}}"/>
+            <Image Height="250" Width="250" Stretch="Uniform" Source="{x:Bind Converter={StaticResource StorageFileImageConverter}}"/>
         </DataTemplate>
 
     </Page.Resources>
@@ -46,7 +46,7 @@
 
             <StackPanel Grid.Column="0" >
                 <TextBlock TextWrapping="Wrap" MaxWidth="300" TextAlignment="Center" Text="{Binding Name, Mode=OneWay}" Foreground="Black" FontFamily="Arial Black" FontSize="25" FontWeight="Bold" HorizontalAlignment="Center"/>
-                <GridView HorizontalAlignment="Center" MaxWidth="400" ItemsSource="{x:Bind ViewModel.Image}" ItemTemplate="{StaticResource ThumbinailBorrowedItem}"/>
+                <GridView IsItemClickEnabled="True" ItemClick="{x:Bind ViewModel.AddImage}" HorizontalAlignment="Center" MaxWidth="400" ItemsSource="{x:Bind ViewModel.Image}" ItemTemplate="{StaticResource ThumbinailBorrowedItem}"/>
 
                 <StackPanel Orientation="Horizontal" Width="500">
                     <Button Style="{StaticResource MainButton}" Content="Adicionar imagem" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,30,0,0" CornerRadius="6" Click="{x:Bind ViewModel.AddImage}"/>

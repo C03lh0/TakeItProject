@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TakeIt.WPF"
+        xmlns:local="clr-namespace:TakeIt.WPF" xmlns:converters="clr-namespace:TakeIt.WPF.Converters"
         mc:Ignorable="d"
         Title="MainWindow" Height="720" Width="1280">
     <Window.Resources>
@@ -18,6 +18,8 @@
             <Setter Property="FontSize" Value="25"/>
             <Setter Property="Foreground" Value="#FFFEF5C8"/>
         </Style>
+
+        <converters:DateTimeConverter x:Key="DateTimeConverter"/>
     </Window.Resources>
 
     <Grid Background="#FF013750">
@@ -69,16 +71,16 @@
                                 </Border>
 
                                 <StackPanel Grid.Column="1">
-                                    <TextBlock Text="{Binding Name}" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Left" Margin="0,0,0,6" LineHeight="10" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Name}" TextAlignment="Center" TextWrapping="Wrap" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Left" Margin="0,0,0,6" LineHeight="10" VerticalAlignment="Center"/>
                                     <TextBlock  FontSize="12" Margin="0,5,0,0" FontWeight="SemiBold" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center">
-                                        <Run Text="{Binding LoanDate}"/>
+                                        <Run Text="{Binding LoanDate, Converter={StaticResource DateTimeConverter}}"/>
                                         <Run Text=" até "/>
-                                        <Run Text="{Binding ReturnDate}"/>
+                                        <Run Text="{Binding ReturnDate, Converter={StaticResource DateTimeConverter}}"/>
                                     </TextBlock>
                                 </StackPanel>
 
                                 <TextBlock Padding="5" Grid.Column="2" Text="{Binding Description}" TextAlignment="Left" Foreground="Black" FontFamily="Segoe UI" FontWeight="SemiBold" TextWrapping="Wrap" FontSize="12"/>
-                                <TextBlock Grid.Column="3" Text="{Binding RegistrationDate}" VerticalAlignment="Bottom" Margin="20,0,0,0"/>
+                                <TextBlock Grid.Column="3" Text="{Binding RegistrationDate, Converter={StaticResource DateTimeConverter}}" VerticalAlignment="Bottom" Margin="20,0,0,0"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -88,9 +90,9 @@
 
         </Border>
         <StackPanel Margin="0,20" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
-            <Button Margin="0,0,100,0" Content="Abrir Lista" MaxWidth="200" Command="{Binding OpenList}" Style="{StaticResource MainButton}"/>
-            <Button Margin="0,0,100,0" Content="Recarregar" MaxWidth="200" Command="{Binding RefreshWindow}" Style="{StaticResource MainButton}"/>
-            <Button Margin="0,0,0,0" Content="Cadastrar" MaxWidth="200" Command="{Binding RegisterBorrowedItem}" Style="{StaticResource MainButton}"/>
+            <Button Margin="0,0,100,0" Content="Abrir Lista" MaxWidth="200" Command="{Binding OpenList}" Background="Blue" Foreground="White"/>
+            <Button Margin="0,0,100,0" Content="Recarregar" MaxWidth="200" Command="{Binding RefreshWindow}" Background="Blue" Foreground="White"/>
+            <Button Margin="0,0,0,0" Content="Cadastrar" MaxWidth="200" Command="{Binding RegisterBorrowedItem}" Background="Blue" Foreground="White"/>
         </StackPanel>
     </Grid>
 </Window>

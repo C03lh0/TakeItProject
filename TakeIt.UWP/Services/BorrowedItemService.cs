@@ -23,7 +23,7 @@ namespace TakeIt.UWP.Services
         }
 
 
-        public async void Add(TEntity obj, ObservableCollection<StorageFile> filesImage)
+        public async Task Add(TEntity obj, ObservableCollection<StorageFile> filesImage)
         {
             var completeObject = await SaveImage(obj, filesImage);
             bool saved = await _borrowedItemRepository.SaveAsync(completeObject);
@@ -39,7 +39,7 @@ namespace TakeIt.UWP.Services
             VerifyIfExecuted(changed);
         }
 
-        public async void Remove(int id)
+        public async Task Remove(int id)
         {
             bool removed = await _borrowedItemRepository.DeleteAsync(id);
             VerifyIfExecuted(removed);
@@ -60,8 +60,9 @@ namespace TakeIt.UWP.Services
         private async Task<TEntity> SaveImage(TEntity obj, ObservableCollection<StorageFile> filesImage)
         {
             var destFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("Images", CreationCollisionOption.OpenIfExists);
-            var imageToBeSaved = filesImage.FirstOrDefault();
-            var image = await imageToBeSaved.CopyAsync(destFolder, imageToBeSaved.Name, NameCollisionOption.ReplaceExisting);
+            var destFolderPath = await ApplicationData.Current.LocalFolder.GetFolderAsync("Images");
+            var imageToBeSaved = filesImage.First();
+            var image = await imageToBeSaved.CopyAsync(destFolderPath, imageToBeSaved.Name, NameCollisionOption.ReplaceExisting);
             var imagePath = Path.Combine("Images", image.Name);
             obj.ImagePath = imagePath;
             return obj;
@@ -73,7 +74,7 @@ namespace TakeIt.UWP.Services
            return await _borrowedItemRepository.FindAsync(id);
         }
         public async Task<List<TEntity>> GetList()=> await _borrowedItemRepository.ListAsync();
-        
+
     }
 
 

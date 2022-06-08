@@ -48,13 +48,13 @@ namespace TakeIt.UWP.ViewModels
 
         private async void InitializeItems()
         {
-            try
+            var borrowedItems = await _borrowedItemService.GetList();
+            if (borrowedItems.Count != 0)
             {
-                var borrowedItems = await _borrowedItemService.GetList();
                 var list = borrowedItems.Select(i => new BorrowedItemViewModel(i));
                 items = new ObservableCollection<BorrowedItemViewModel>(list);
             }
-            catch(Exception)
+            else
             {
                 items = new ObservableCollection<BorrowedItemViewModel>();
                 var item = new BorrowedItemViewModel(new NullObjectBorrowedItem());

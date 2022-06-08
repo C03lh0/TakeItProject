@@ -29,7 +29,7 @@ namespace TakeIt.ViewModels
         public Command OpenList { get; private set; }
         public Command RefreshWindow { get; private set; }
         public Command RegisterBorrowedItem { get; private set; }
-        public List<BorrowedItem> ListBorrowedItens { get; set; }
+        public ObservableCollection<BorrowedItem> ListBorrowedItens { get; set; }
         private readonly IBorrowedItemService<BorrowedItem> _borrowedItemService;
         private readonly IBorrowedItemRepository<BorrowedItem> _borrowedItemRepository = new BorrowedItemRepository<BorrowedItem>();
 
@@ -51,17 +51,26 @@ namespace TakeIt.ViewModels
             RegisterBorrowedItem = new Command(Register);
             RefreshWindow = new Command(GetAllListBorrwedItem);
             _borrowedItemService = new BorrowedItemService<BorrowedItem>(_borrowedItemRepository, _maximumItems);
+            ListBorrowedItens = new ObservableCollection<BorrowedItem>();
             GetAllListBorrwedItem();
         }
 
         public async void  GetAllListBorrwedItem()
         {
-            ListBorrowedItens = await _borrowedItemService.GetList();
-            
-            if(ListBorrowedItens == null)
+            var list = await _borrowedItemService.GetList();
+            if (list != null)
             {
-                ListBorrowedItens = new List<BorrowedItem> { new NullObjectBorrowedItem() };
-            }        
+                ListBorrowedItens.Clear();
+                foreach (var item in list)
+                {
+                    ListBorrowedItens.Add(item);
+                }
+            }
+            else
+            {
+                ListBorrowedItens.Clear();
+                ListBorrowedItens.Add(new NullObjectBorrowedItem());
+            }
         }
 
         public void Register()

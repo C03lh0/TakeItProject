@@ -76,11 +76,12 @@ namespace TakeIt.Infra.Data.Repository
         {
             var listItems = await ListAsync();
             var descendingList = listItems.OrderByDescending(item => item.ID);
+            int _quantity = listItems.Count < 5 ? listItems.Count : 5;
 
-            List<TEntity> listMax = new List<TEntity>();
+            List <TEntity> listMax = new List<TEntity>();
             if (listItems.Count != 0)
             {
-                for (int i = 0; i < quantity; i++)
+                for (int i = 0; i < _quantity; i++)
                 {
                     listMax.Add((TEntity)descendingList.ToArray().GetValue(i));
                 }

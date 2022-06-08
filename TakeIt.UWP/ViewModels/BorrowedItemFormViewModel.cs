@@ -25,6 +25,7 @@ namespace TakeIt.UWP.ViewModels
         private readonly IBorrowedItemRepository<BorrowedItem> _borrowedItemRepository = new BorrowedItemRepository<BorrowedItem>();
 
         public int ID { get; set; }
+        public string ImagePath { get; private set; }
         public string DaysLeftForReturn => ReturnDate.Subtract(LoanDate).Days.ToString();
 
         private string _name;
@@ -111,17 +112,14 @@ namespace TakeIt.UWP.ViewModels
         private async Task LoadBorrowedItemAsync()
         {
             var findedItem = await _borrowedItemService.FindAsync(ID);
-            if (findedItem == null) 
-            {
-                _name = model.Name;
-                _description = model.Description;
-                _loanDate = model.LoanDate;
-                _returnDate = model.LoanDate;
-            }
-            else
+            if (findedItem != null) 
             {
                 model = findedItem;
             }
+            _name = model.Name;
+            _description = model.Description;
+            _loanDate = model.LoanDate;
+            _returnDate = model.ReturnDate;
             await LoadBorrowedItemImage();
         }
 
@@ -135,8 +133,9 @@ namespace TakeIt.UWP.ViewModels
             }
             else
             {
-                var path = Path.Combine("Images", model.ImagePath);
-                var finded = await ApplicationData.Current.LocalFolder.GetFileAsync(path);
+                ImagePath = model.ImagePath; // Path.Combine("Images", );
+                StorageFile finded = await ApplicationData.Current.LocalFolder.GetFileAsync(ImagePath);
+                Image.Clear();
                 Image.Add(finded);
             }
         }
@@ -193,7 +192,7 @@ namespace TakeIt.UWP.ViewModels
 
         public async void Delete()
         {
-           await _borrowedItemService.Remove(ID);
+           await _borrowedItemService.Remove(ID, ImagePath);
         }
 
         public void Cancel()

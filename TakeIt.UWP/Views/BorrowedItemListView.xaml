@@ -24,7 +24,7 @@
                 <Border Grid.Column="0" Width="150" Height="100">
                     <Canvas Height="80" Width="100">
                         <Canvas.Background>
-                            <ImageBrush ImageSource="{x:Bind Thumbnail, Mode=OneWay}" Stretch="Fill"/>
+                            <ImageBrush ImageSource="{x:Bind Thumbnail, Mode=OneWay}" Stretch="Uniform"/>
                         </Canvas.Background>
                     </Canvas>
                 </Border>

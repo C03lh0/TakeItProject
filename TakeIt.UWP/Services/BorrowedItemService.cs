@@ -39,9 +39,14 @@ namespace TakeIt.UWP.Services
             VerifyIfExecuted(changed);
         }
 
-        public async Task Remove(int id)
+        public async Task Remove(int id, string imagePath)
         {
             bool removed = await _borrowedItemRepository.DeleteAsync(id);
+            if (!imagePath.Equals("Images\\order.png") && removed)
+            {
+                StorageFile imageFinded = await ApplicationData.Current.LocalFolder.GetFileAsync(imagePath);
+                await imageFinded.DeleteAsync();
+            }
             VerifyIfExecuted(removed);
         }
 

@@ -3,6 +3,7 @@
 
     <Style TargetType="Button" x:Key="mainButton">
         <Style.Setters>
+            <Setter Property="Foreground" Value="White"/>
             <Setter Property="Background">
                 <Setter.Value>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">

@@ -55,7 +55,7 @@
             <Grid Margin="0,0,0,45" Background="#FFFEF5C8" MaxHeight="570" MaxWidth="1140" >
                 <TextBlock Padding ="0,10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,0,0,0" Text="Lista de objetos Emprestados" FontSize="20" FontFamily="Microsoft YaHei" Foreground="#FF2C6B74" MaxWidth="229" TextWrapping="Wrap" TextAlignment="Center" FontWeight="Bold"/>
 
-                <ListView Background="Transparent" BorderBrush="Transparent" Margin="0,70,0,0" Height="500" Width="800" ItemsSource="{Binding ListBorrowedItens}" MouseDoubleClick="ListView_MouseDoubleClick">
+                <ListView Background="Transparent" BorderBrush="Transparent" Margin="0,70,0,0" Height="500" Width="800" ItemsSource="{Binding ListBorrowedItens, Mode=OneWay}" MouseDoubleClick="ListView_MouseDoubleClick">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid MaxHeight="200">
@@ -90,9 +90,9 @@
 
         </Border>
         <StackPanel Margin="0,20" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
-            <Button Margin="0,0,100,0" Content="Abrir Lista" MaxWidth="200" Command="{Binding OpenList}" Background="Blue" Foreground="White"/>
-            <Button Margin="0,0,100,0" Content="Recarregar" MaxWidth="200" Command="{Binding RefreshWindow}" Background="Blue" Foreground="White"/>
-            <Button Margin="0,0,0,0" Content="Cadastrar" MaxWidth="200" Command="{Binding RegisterBorrowedItem}" Background="Blue" Foreground="White"/>
+            <Button Margin="0,0,100,0" Content="Abrir Lista" MaxWidth="200" Command="{Binding OpenList}" Style="{StaticResource mainButton}"/>
+            <Button Margin="0,0,100,0" Content="Recarregar" MaxWidth="200" Command="{Binding RefreshWindow}" Style="{StaticResource mainButton}"/>
+            <Button Margin="0,0,0,0" Content="Cadastrar" MaxWidth="200" Command="{Binding RegisterBorrowedItem}" Style="{StaticResource mainButton}"/>
         </StackPanel>
     </Grid>
 </Window>

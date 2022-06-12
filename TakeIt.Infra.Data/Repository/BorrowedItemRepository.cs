@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using TakeIt.Domain.Entities;
 using TakeIt.Domain.Interface;
+using TakeIt.Domain.Models;
 using TakeIt.Infra.Data.Context;
 
 namespace TakeIt.Infra.Data.Repository
 {
     public class BorrowedItemRepository <TEntity> : IBorrowedItemRepository <TEntity> where TEntity : BaseEntity
     {
-        protected readonly ApplicationContext applicationContext;
-
+        private ApplicationContext applicationContext;
         public BorrowedItemRepository()
         {
             applicationContext = new ApplicationContext();
@@ -23,8 +23,11 @@ namespace TakeIt.Infra.Data.Repository
             TEntity entity = await FindAsync(id);
             if(entity != null)
             {
-                applicationContext.Set<TEntity>().Remove(entity);
-                applicationContext.SaveChanges();
+                using (var context = new ApplicationContext())
+                {
+                    context.Set<TEntity>().Remove(entity);
+                    context.SaveChanges();
+                }
                 return true;
             }
             return false;
@@ -35,7 +38,10 @@ namespace TakeIt.Infra.Data.Repository
             TEntity finded;
             try
             {
-                finded = await applicationContext.Set<TEntity>().FindAsync(id);
+                using (var context = new ApplicationContext())
+                {
+                    finded = await context.Set<TEntity>().FindAsync(id);
+                }
             }
             catch (Exception)
             {
@@ -48,8 +54,11 @@ namespace TakeIt.Infra.Data.Repository
         {
             try
             {
-                await applicationContext.Set<TEntity>().AddAsync(product);
-                applicationContext.SaveChanges();
+                using (var context = new ApplicationContext())
+                {
+                    await context.Set<TEntity>().AddAsync(product);
+                    context.SaveChanges();
+                }
                 return true;
             }
             catch (Exception)
@@ -62,7 +71,7 @@ namespace TakeIt.Infra.Data.Repository
         {
             try
             {
-                applicationContext.Set<TEntity>().Update(product);
+                applicationContext.Entry(product).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 applicationContext.SaveChanges();
                 return true;
             }
@@ -95,7 +104,11 @@ namespace TakeIt.Infra.Data.Repository
 
         public async Task<List<TEntity>> ListAsync()
         {
-            List<TEntity> list = applicationContext.Set<TEntity>().ToList();
+            List<TEntity> list;
+            using (var context = new ApplicationContext())
+            {
+                list = context.Set<TEntity>().ToList();
+            }
             return list;
         }
     }

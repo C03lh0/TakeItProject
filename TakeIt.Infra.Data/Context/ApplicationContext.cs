@@ -10,7 +10,7 @@ namespace TakeIt.Infra.Data.Context
 {
     public class ApplicationContext : DbContext
     {
-        private DbSet<BorrowedItem> BorrowedItems { get; set; }
+        public DbSet<BorrowedItem> BorrowedItems { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlite($"DataSource={Path.Combine(ApplicationData.Current.LocalFolder.Path, "data.db")}");
     }
 }

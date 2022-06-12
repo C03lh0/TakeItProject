@@ -94,17 +94,7 @@ namespace TakeIt.UWP.ViewModels
         public async void LoadImage()
         {
             StorageFile file;
-
-            if (ID != -1)
-            {
-                file = await ApplicationData.Current.LocalFolder.GetFileAsync(imagePath);
-            }
-            else
-            {
-                var uriNullObjectImage = new Uri(imagePath);
-                file = await StorageFile.GetFileFromApplicationUriAsync(uriNullObjectImage);
-            }
-
+            file = await ApplicationData.Current.LocalFolder.GetFileAsync(imagePath);
             using (var stream = file.OpenReadAsync().AsTask().Result)
             {
                 var bi = new BitmapImage();

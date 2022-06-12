@@ -10,6 +10,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -108,6 +109,9 @@ namespace TakeIt.UWP
         protected override void OnActivated(IActivatedEventArgs e)
         {
             base.OnActivated(e);
+
+            CreateFolderImageWithDefaultImage();
+
             Frame rootFrame = Window.Current.Content as Frame;
 
            
@@ -145,6 +149,14 @@ namespace TakeIt.UWP
                 rootFrame.Navigate(typeof(BorrowedItemListView));
             }  
             Window.Current.Activate();
+        }
+
+        private async void CreateFolderImageWithDefaultImage()
+        {
+            var destFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("Images", CreationCollisionOption.OpenIfExists);
+            var destFolderPath = await ApplicationData.Current.LocalFolder.GetFolderAsync("Images");
+            var imageToBeSaved =  await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Image/order.png")); 
+            await imageToBeSaved.CopyAsync(destFolderPath, imageToBeSaved.Name, NameCollisionOption.ReplaceExisting);
         }
     }
 }

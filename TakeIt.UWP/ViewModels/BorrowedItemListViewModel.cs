@@ -46,6 +46,11 @@ namespace TakeIt.UWP.ViewModels
             }
         }
 
+        public void AddNewBorrowedItem()
+        {  
+           _currentAppShell.MainFrame.Navigate(typeof(BorrowedItemFormView), new Object[] { _currentAppShell, -1 });
+        }
+
         private async void InitializeItems()
         {
             var borrowedItems = await _borrowedItemService.GetList();

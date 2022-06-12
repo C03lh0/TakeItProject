@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Windows;
 using TakeIt.Infra.Data.Context;
 using Windows.Storage;
-
 namespace TakeIt.WPF
 {
     /// <summary>

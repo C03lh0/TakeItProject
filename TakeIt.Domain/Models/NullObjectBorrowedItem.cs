@@ -15,7 +15,7 @@ namespace TakeIt.Domain.Models
             Description = "Descrição do objeto";
             LoanDate = DateTimeOffset.Now;
             ReturnDate = DateTimeOffset.Now;
-            ImagePath = "ms-appx:///Assets/Image/order.png";
+            ImagePath = "Images\\order.png";
             RegistrationDate = DateTimeOffset.Now;
         }
     }

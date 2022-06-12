@@ -15,10 +15,9 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using TakeIt.Commos;
 using TakeIt.Domain.Interface;
-using TakeIt.Models;
+using TakeIt.Domain.Models;
+using TakeIt.Infra.Data.Repository;
 using TakeIt.Services.Commands;
-using TakeIt.Services.Services;
-using TakeIt.WPF.Models;
 using TakeIt.WPF.Services;
 using TakeIt.WPF.ViewModels;
 
@@ -26,12 +25,13 @@ namespace TakeIt.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
+        private readonly int _maximumItems;
         public Command OpenList { get; private set; }
         public Command RefreshWindow { get; private set; }
         public Command RegisterBorrowedItem { get; private set; }
-        public List<BorrowedItem> ListBorrowedItens { get; set; }
-        private IBorrowedItemService<BorrowedItem> _borrowedItemService;
-        private IBorrowedItemRepository<BorrowedItem> _borrowedItemRepository = new BorrowedItemRepository<BorrowedItem>();
+        public ObservableCollection<BorrowedItem> ListBorrowedItens { get; set; }
+        private readonly IBorrowedItemService<BorrowedItem> _borrowedItemService;
+        private readonly IBorrowedItemRepository<BorrowedItem> _borrowedItemRepository = new BorrowedItemRepository<BorrowedItem>();
 
         private string thumbnail;
         public string Thumbnail
@@ -46,26 +46,30 @@ namespace TakeIt.ViewModels
 
         public MainViewModel()
         {
+            _maximumItems = 5;
             OpenList = new Command(ShowList);
             RegisterBorrowedItem = new Command(Register);
             RefreshWindow = new Command(GetAllListBorrwedItem);
-            _borrowedItemService = new BorrowedItemService<BorrowedItem>(_borrowedItemRepository);
-            ListBorrowedItens = new List<BorrowedItem>();
+            _borrowedItemService = new BorrowedItemService<BorrowedItem>(_borrowedItemRepository, _maximumItems);
+            ListBorrowedItens = new ObservableCollection<BorrowedItem>();
             GetAllListBorrwedItem();
         }
 
         public async void  GetAllListBorrwedItem()
         {
-            try
+            var list = await _borrowedItemService.GetList();
+            if (list != null)
             {
                 ListBorrowedItens.Clear();
-                ListBorrowedItens = await _borrowedItemService.GetList();
+                foreach (var item in list)
+                {
+                    ListBorrowedItens.Add(item);
+                }
             }
-            catch(Exception)
+            else
             {
                 ListBorrowedItens.Clear();
-                var nullItem = new NullObjectBorrowedItem();
-                ListBorrowedItens.Add(nullItem);
+                ListBorrowedItens.Add(new NullObjectBorrowedItem());
             }
         }
 
@@ -78,8 +82,5 @@ namespace TakeIt.ViewModels
         {
             Process.Start($"com.takeituwp://?page={PageTokens.BorrowedItemListView}");
         }
-
-
-
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TakeIt.UWP.Models;
+using TakeIt.Domain.Models;
 using Windows.Storage;
 using Windows.UI.Xaml.Media.Imaging;
 
@@ -93,10 +93,8 @@ namespace TakeIt.UWP.ViewModels
 
         public async void LoadImage()
         {
-            //var file = await ApplicationData.Current.LocalFolder.GetFileAsync(imagePath);
-            var uriNullObjectImage = new Uri(imagePath);
-            var file = await StorageFile.GetFileFromApplicationUriAsync(uriNullObjectImage);
-
+            StorageFile file;
+            file = await ApplicationData.Current.LocalFolder.GetFileAsync(imagePath);
             using (var stream = file.OpenReadAsync().AsTask().Result)
             {
                 var bi = new BitmapImage();

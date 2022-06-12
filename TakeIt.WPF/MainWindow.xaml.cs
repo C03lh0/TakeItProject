@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TakeIt.Commos;
-using TakeIt.Models;
+using TakeIt.Domain.Models;
 using TakeIt.ViewModels;
 
 namespace TakeIt.WPF

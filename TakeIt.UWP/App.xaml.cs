@@ -4,11 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TakeIt.Commos;
+using TakeIt.Infra.Data.Context;
 using TakeIt.UWP.Views;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -39,7 +41,7 @@ namespace TakeIt.UWP
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -73,6 +75,11 @@ namespace TakeIt.UWP
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
+
+            using (var db = new ApplicationContext())
+            {
+                await db.Database.EnsureCreatedAsync();
+            }
         }
 
         /// <summary>
@@ -102,6 +109,9 @@ namespace TakeIt.UWP
         protected override void OnActivated(IActivatedEventArgs e)
         {
             base.OnActivated(e);
+
+            CreateFolderImageWithDefaultImage();
+
             Frame rootFrame = Window.Current.Content as Frame;
 
            
@@ -139,6 +149,14 @@ namespace TakeIt.UWP
                 rootFrame.Navigate(typeof(BorrowedItemListView));
             }  
             Window.Current.Activate();
+        }
+
+        private async void CreateFolderImageWithDefaultImage()
+        {
+            var destFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("Images", CreationCollisionOption.OpenIfExists);
+            var destFolderPath = await ApplicationData.Current.LocalFolder.GetFolderAsync("Images");
+            var imageToBeSaved =  await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Image/order.png")); 
+            await imageToBeSaved.CopyAsync(destFolderPath, imageToBeSaved.Name, NameCollisionOption.ReplaceExisting);
         }
     }
 }

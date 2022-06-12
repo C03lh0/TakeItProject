@@ -10,16 +10,18 @@ namespace TakeIt.WPF.Services
 {
     public class BorrowedItemService<TEntity> : IBorrowedItemService<TEntity> where TEntity : BaseEntity
     {
+        private readonly int _maxItem;
         private readonly IBorrowedItemRepository<TEntity> _borrowedItemRepository;
 
-        public BorrowedItemService(IBorrowedItemRepository<TEntity> borrowedItemRepository)
+        public BorrowedItemService(IBorrowedItemRepository<TEntity> borrowedItemRepository, int maxItem)
         {
+            _maxItem = maxItem;
             _borrowedItemRepository = borrowedItemRepository;
         }
 
         public Task<List<TEntity>> GetList()
         {
-            return _borrowedItemRepository.ListAsync();
+            return _borrowedItemRepository.ToListMaximumItemsAsync(_maxItem);
         }
     }
 }

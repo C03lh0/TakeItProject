@@ -8,8 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using TakeIt.Domain.Entities;
 using TakeIt.Domain.Interface;
-using TakeIt.Services.Services;
-using TakeIt.UWP.Models;
 using Windows.Storage;
 
 namespace TakeIt.UWP.Services
@@ -24,48 +22,70 @@ namespace TakeIt.UWP.Services
             _borrowedItemRepository = borrowedItemRepository;
         }
 
-
-        public async Task<int> Add(TEntity obj, ObservableCollection<StorageFile> filesImage)
+        public async Task<bool> Add(TEntity obj, ObservableCollection<StorageFile> filesImage)
         {
-            var completeObject = await SaveImage(obj, filesImage);
-            try
+            StorageFile imageDefault = await ApplicationData.Current.LocalFolder.GetFileAsync("Images\\order.png");
+            var completeObject = obj;
+            completeObject.ImagePath = "Images\\order.png";
+            if (!(filesImage.ElementAt(0).Name.Equals("order.png")))
             {
-                return await _borrowedItemRepository.SaveAsync(completeObject);
+               completeObject = await SaveImage(obj, filesImage);
             }
-            catch
+            bool saved = await _borrowedItemRepository.SaveAsync(completeObject);
+            return saved;
+        }
+
+        public async Task<bool> Change(TEntity obj, ObservableCollection<StorageFile> currentImage, string imageBeforePath, int id)
+        {
+            StorageFile imageFinded = await ApplicationData.Current.LocalFolder.GetFileAsync(imageBeforePath);
+            var completeObject = obj;
+            completeObject.ImagePath = imageBeforePath;
+            completeObject.ID = id;
+            if (!(imageFinded.Name.Equals(currentImage.ElementAt(0).Name)))
             {
-                //Chamar Dialog Service
-                return 0;
+                await DeleteImage(imageBeforePath);
+                completeObject = await SaveImage(obj, currentImage);
+            }
+            bool updateItem = await _borrowedItemRepository.UpdateAsync(completeObject);
+            return updateItem;
+        }
+
+        public async Task<bool> Remove(int id, string imagePath)
+        {
+            bool removed = await _borrowedItemRepository.DeleteAsync(id);
+            if(removed)
+                await DeleteImage(imagePath);
+
+            return removed;
+        }
+
+        public async Task<TEntity> FindAsync(int id)
+        {
+            return await _borrowedItemRepository.FindAsync(id);
+        }
+
+        private static async Task DeleteImage(string imagePath)
+        {
+            if (!imagePath.Equals("Images\\order.png"))
+            {
+                StorageFile imageFinded = await ApplicationData.Current.LocalFolder.GetFileAsync(imagePath);
+                await imageFinded.DeleteAsync();
             }
         }
 
-        public async Task Change(TEntity obj, ObservableCollection<StorageFile> filesImage)
-        {
-            var completeObject = await SaveImage(obj, filesImage);
-            try
-            {
-                await _borrowedItemRepository.UpdateAsync(completeObject);
-            }
-            catch (Exception)
-            {
-                //Chamar Dialog Service
-            }
-        }
-
-        private static async Task<TEntity> SaveImage(TEntity obj, ObservableCollection<StorageFile> filesImage)
+        private async Task<TEntity> SaveImage(TEntity obj, ObservableCollection<StorageFile> filesImage)
         {
             var destFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("Images", CreationCollisionOption.OpenIfExists);
-            var imageToBeSaved = filesImage.FirstOrDefault();
-            var image = await imageToBeSaved.CopyAsync(destFolder, imageToBeSaved.Name, NameCollisionOption.ReplaceExisting);
+            var destFolderPath = await ApplicationData.Current.LocalFolder.GetFolderAsync("Images");
+            var imageToBeSaved = filesImage.First();
+            var image = await imageToBeSaved.CopyAsync(destFolderPath, imageToBeSaved.Name, NameCollisionOption.GenerateUniqueName);
             var imagePath = Path.Combine("Images", image.Name);
             obj.ImagePath = imagePath;
             return obj;
         }
 
-        public Task<bool> Remove(int id) => _borrowedItemRepository.DeleteAsync(id);
-        public Task<TEntity> FindAsync(int id) => _borrowedItemRepository.FindAsync(id);
         public async Task<List<TEntity>> GetList()=> await _borrowedItemRepository.ListAsync();
-        
+
     }
 
 

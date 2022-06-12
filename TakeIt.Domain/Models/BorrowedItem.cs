@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TakeIt.Domain.Entities;
 
-namespace TakeIt.UWP.Models
+namespace TakeIt.Domain.Models
 {
     public class BorrowedItem : BaseEntity
     {

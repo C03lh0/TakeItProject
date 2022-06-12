@@ -46,5 +46,7 @@
     <Grid Background="#FFFEF5C8" MaxHeight="700" MaxWidth="1140" CornerRadius="10">
         <TextBlock Padding ="0,10" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="20,0,0,0" Text="Lisa de Objetos Emprestados" MaxWidth="229" TextAlignment="Center" Style="{StaticResource TextLogo}"/>
         <ListView SelectionMode="None" ItemClick="{x:Bind ViewModel.OpenDetailsBorrowedItem}" IsItemClickEnabled="True" ItemsSource="{x:Bind ViewModel.Items}" ItemTemplate="{StaticResource TemplateListView}" Background="Transparent" BorderBrush="Transparent" Margin="0,70,0,0" Height="500" Width="800"/>
+        <Button VerticalAlignment="Bottom" HorizontalAlignment="Center" Style="{StaticResource MainButton}" Foreground="White" Content="Adicionar +" MaxWidth="200" CornerRadius="6" Click="{x:Bind ViewModel.AddNewBorrowedItem}"/>
     </Grid>
+    
 </Page>

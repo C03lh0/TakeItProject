@@ -153,7 +153,7 @@ namespace TakeIt.UWP
 
         private async void CreateFolderImageWithDefaultImage()
         {
-            var destFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("Images", CreationCollisionOption.OpenIfExists);
+            await ApplicationData.Current.LocalFolder.CreateFolderAsync("Images", CreationCollisionOption.OpenIfExists);
             var destFolderPath = await ApplicationData.Current.LocalFolder.GetFolderAsync("Images");
             var imageToBeSaved =  await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Image/order.png")); 
             await imageToBeSaved.CopyAsync(destFolderPath, imageToBeSaved.Name, NameCollisionOption.ReplaceExisting);

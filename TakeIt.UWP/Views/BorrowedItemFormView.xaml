@@ -76,9 +76,9 @@
         </Grid>
         
         <StackPanel Grid.Row="2" Margin="302,0,0,-6" VerticalAlignment="Bottom" HorizontalAlignment="Left" Orientation="Horizontal">
-            <Button Style="{StaticResource MainButton}" Margin="0,0,100,0" Foreground="White" Content="Registrar" MaxWidth="200" CornerRadius="6" Click="{x:Bind ViewModel.Registrate}"/>
-            <Button Style="{StaticResource MainButton}" Margin="0,0,100,0" Foreground="White" Content="Atualizar" MaxWidth="200" CornerRadius="6" Click="{x:Bind ViewModel.Update}" Visibility="Visible"/>
-            <Button Style="{StaticResource MainButton}" Margin="0,0,100,0" Foreground="White" Content="Deletar" MaxWidth="200" CornerRadius="6" Click="{x:Bind ViewModel.Delete}"/>
+            <Button Style="{StaticResource MainButton}" Margin="0,0,100,0" Foreground="White" Content="Adicionar" MaxWidth="200" CornerRadius="6" Click="{x:Bind ViewModel.AddItem}" Visibility="{x:Bind ViewModel.VisibilityAddButton, Mode=OneWay}"/>
+            <Button Style="{StaticResource MainButton}" Margin="0,0,100,0" Foreground="White" Content="Atualizar" MaxWidth="200" CornerRadius="6" Click="{x:Bind ViewModel.UpdateItem}" Visibility="{x:Bind ViewModel.VisibilityUpdateAndDeleteButton, Mode=OneWay}"/>
+            <Button Style="{StaticResource MainButton}" Margin="0,0,100,0" Foreground="White" Content="Deletar" MaxWidth="200" CornerRadius="6" Click="{x:Bind ViewModel.DeleteItem}" Visibility="{x:Bind ViewModel.VisibilityUpdateAndDeleteButton, Mode=OneWay}"/>
             <Button Style="{StaticResource MainButton}" Margin="0,0,0,0" Foreground="White" Content="Cancelar" MaxWidth="200" CornerRadius="6" Click="{x:Bind ViewModel.Cancel}"/>
         </StackPanel>
         

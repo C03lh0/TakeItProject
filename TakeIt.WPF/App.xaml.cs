@@ -1,6 +1,12 @@
-﻿using System.IO;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.IO;
 using System.Windows;
+using TakeIt.Domain.Entities;
+using TakeIt.Domain.Interface;
+using TakeIt.Domain.Models;
 using TakeIt.Infra.Data.Context;
+using TakeIt.WPF.Services;
 using Windows.Storage;
 namespace TakeIt.WPF
 {
@@ -13,7 +19,6 @@ namespace TakeIt.WPF
         {
             DataBaseInitialization();
         }
-
         private async void DataBaseInitialization()
         {
             using(var db = new ApplicationContext())

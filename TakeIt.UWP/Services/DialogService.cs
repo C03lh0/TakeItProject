@@ -25,7 +25,7 @@ namespace TakeIt.UWP.Services
                 CloseButtonText = "Tente Novamente",
                 DefaultButton = ContentDialogButton.Close
             };
-            ContentDialogResult result = await messageErroDialog.ShowAsync();
+            await messageErroDialog.ShowAsync();
         }
 
         public async void DispalyMessageSuccessfullyDialog(string message)

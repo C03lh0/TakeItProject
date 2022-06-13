@@ -14,7 +14,7 @@ namespace TakeIt.Domain.Interface
         Task<bool> DeleteAsync(int id);
         Task<TEntity> FindAsync(int id);
         Task<List<TEntity>> ListAsync();
-        Task<bool> UpdateAsync(TEntity product);
+        bool UpdateAsync(TEntity product);
         Task<bool> SaveAsync(TEntity product);
         Task<List<TEntity>> ToListMaximumItemsAsync(int quantity);
     }

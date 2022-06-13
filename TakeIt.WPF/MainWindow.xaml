@@ -1,0 +1,98 @@
+﻿<Window x:Class="TakeIt.WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TakeIt.WPF" xmlns:converters="clr-namespace:TakeIt.WPF.Converters"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="720" Width="1280">
+    <Window.Resources>
+        <Style x:Key="TextHeader" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Arial Black"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style x:Key="StyleLogoType" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Britannic Bold"/>
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="Foreground" Value="#FFFEF5C8"/>
+        </Style>
+
+        <converters:DateTimeConverter x:Key="DateTimeConverter"/>
+    </Window.Resources>
+
+    <Grid Background="#FF013750">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal" Grid.Column="0" Margin="0,5,0,0">
+                    <Canvas Margin="20,0,0,0" Height="51" Width="60">
+                        <Canvas.Background>
+                            <ImageBrush ImageSource="Assets/itens (2).png" Stretch="Uniform"/>
+                        </Canvas.Background>
+                    </Canvas>
+                    <TextBlock Padding="5" Text="Take It" Style="{StaticResource StyleLogoType}" FontFamily="Microsoft YaHei UI"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right" Margin="0,5,0,0">
+                    <TextBlock Padding ="0,10" Margin="0,0,30,0" Text="Sobre" Style="{StaticResource TextHeader}"/>
+                    <TextBlock Padding ="0,10" Margin="0,0,10,0" Text="Conatato" Style="{StaticResource TextHeader}"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+        <Border Margin ="0,20,0,0" Grid.Row="1" CornerRadius="10" Background="#FFFEF5C8"  MaxWidth="1150">
+            <Grid Margin="0,0,0,45" Background="#FFFEF5C8" MaxHeight="570" MaxWidth="1140" >
+                <TextBlock Padding ="0,10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,0,0,0" Text="Lista de objetos Emprestados" FontSize="20" FontFamily="Microsoft YaHei" Foreground="#FF2C6B74" MaxWidth="229" TextWrapping="Wrap" TextAlignment="Center" FontWeight="Bold"/>
+
+                <ListView Background="Transparent" BorderBrush="Transparent" Margin="0,70,0,0" Height="500" Width="800" ItemsSource="{Binding ListBorrowedItens, Mode=OneWay}" MouseDoubleClick="ListView_MouseDoubleClick">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid MaxHeight="200">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="170"/>
+                                    <ColumnDefinition Width="280"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border Grid.Column="0" Width="150" Height="100">
+                                    <Image Source="Assets/order.png"/>
+                                </Border>
+
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="{Binding Name}" TextAlignment="Center" TextWrapping="Wrap" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Left" Margin="0,0,0,6" LineHeight="10" VerticalAlignment="Center"/>
+                                    <TextBlock  FontSize="12" Margin="0,5,0,0" FontWeight="SemiBold" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center">
+                                        <Run Text="{Binding LoanDate, Converter={StaticResource DateTimeConverter}}"/>
+                                        <Run Text=" até "/>
+                                        <Run Text="{Binding ReturnDate, Converter={StaticResource DateTimeConverter}}"/>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <TextBlock Padding="5" Grid.Column="2" Text="{Binding Description}" TextAlignment="Left" Foreground="Black" FontFamily="Segoe UI" FontWeight="SemiBold" TextWrapping="Wrap" FontSize="12"/>
+                                <TextBlock Grid.Column="3" Text="{Binding RegistrationDate, Converter={StaticResource DateTimeConverter}}" VerticalAlignment="Bottom" Margin="20,0,0,0"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+
+
+        </Border>
+        <StackPanel Margin="0,20" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
+            <Button Margin="0,0,100,0" Content="Minha Lista" MaxWidth="200" Command="{Binding OpenList}" Style="{StaticResource mainButton}"/>
+            <Button Margin="0,0,100,0" Content="Recarregar" MaxWidth="200" Command="{Binding RefreshWindow}" Style="{StaticResource mainButton}"/>
+            <Button Margin="0,0,0,0" Content="Adicionar" MaxWidth="200" Command="{Binding AddItem}" Style="{StaticResource mainButton}"/>
+        </StackPanel>
+    </Grid>
+</Window>

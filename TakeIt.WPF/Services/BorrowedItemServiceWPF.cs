@@ -1,0 +1,27 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using TakeIt.Domain.Entities;
+using TakeIt.Domain.Interface;
+
+namespace TakeIt.WPF.Services
+{
+    public class BorrowedItemServiceWPF<TEntity> : IBorrowedItemService<TEntity> where TEntity : BaseEntity
+    {
+        private readonly int _maxItem;
+        private readonly IBorrowedItemRepository<TEntity> _borrowedItemRepository;
+
+        public BorrowedItemServiceWPF(IBorrowedItemRepository<TEntity> borrowedItemRepository, int maxItem)
+        {
+            _maxItem = maxItem;
+            _borrowedItemRepository = borrowedItemRepository;
+        }
+
+        public Task<List<TEntity>> GetList()
+        {
+            return _borrowedItemRepository.ToListMaximumItemsAsync(_maxItem);
+        }
+    }
+}

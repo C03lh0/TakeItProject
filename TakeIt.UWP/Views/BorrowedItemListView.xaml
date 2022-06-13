@@ -1,0 +1,52 @@
+﻿<Page
+    x:Class="TakeIt.UWP.Views.BorrowedItemListView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TakeIt.UWP.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:viewmodels="using:TakeIt.UWP.ViewModels" 
+    xmlns:converters="using:TakeIt.UWP.Converters" 
+    xmlns:storage="using:Windows.Storage"
+    mc:Ignorable="d"
+    Background="#FF013750">
+
+    <Page.Resources>
+        <DataTemplate x:Key="TemplateListView" x:DataType="viewmodels:BorrowedItemViewModel">
+            <Grid MaxHeight="100" DataContextChanged="{x:Bind LoadImage}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="300"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Border Grid.Column="0" Width="150" Height="100">
+                    <Canvas Height="80" Width="100">
+                        <Canvas.Background>
+                            <ImageBrush ImageSource="{x:Bind Thumbnail, Mode=OneWay}" Stretch="Uniform"/>
+                        </Canvas.Background>
+                    </Canvas>
+                </Border>
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock Text="{x:Bind Name}" FontSize="15" FontWeight="SemiBold" HorizontalAlignment="Left" Foreground="Black" Margin="0,0,0,6" TextWrapping="Wrap" />
+                    <TextBlock FontSize="12" Foreground="Black" Margin="0,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                                    <Run Text="{x:Bind LoanDate}"/>
+                                    <Run Text=" a "/>
+                                    <Run Text="{x:Bind ReturnDate}"/>
+                    </TextBlock>
+                </StackPanel>
+                <TextBlock Padding="5" Grid.Column="2" Text="{x:Bind Description}" TextAlignment="Left" Foreground="Black" FontFamily="Segoe UI" FontWeight="SemiBold" TextWrapping="Wrap" FontSize="12"/>
+                <TextBlock Grid.Column="3" Foreground="Black" Text="{x:Bind RegistrationDate}" VerticalAlignment="Bottom" Margin="20,0,0,0" FontFamily="Segoe UI" FontWeight="Normal" FontSize="12"/>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid Background="#FFFEF5C8" MaxHeight="700" MaxWidth="1140" CornerRadius="10">
+        <TextBlock Padding ="0,10" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="20,0,0,0" Text="Lisa de Objetos Emprestados" MaxWidth="229" TextAlignment="Center" Style="{StaticResource TextLogo}"/>
+        <ListView SelectionMode="None" ItemClick="{x:Bind ViewModel.OpenDetailsBorrowedItem}" IsItemClickEnabled="True" ItemsSource="{x:Bind ViewModel.Items}" ItemTemplate="{StaticResource TemplateListView}" Background="Transparent" BorderBrush="Transparent" Margin="0,70,0,0" Height="500" Width="800"/>
+        <Button VerticalAlignment="Bottom" HorizontalAlignment="Center" Style="{StaticResource MainButton}" Foreground="White" Content="Adicionar +" MaxWidth="200" CornerRadius="6" Click="{x:Bind ViewModel.AddNewBorrowedItem}"/>
+    </Grid>
+    
+</Page>

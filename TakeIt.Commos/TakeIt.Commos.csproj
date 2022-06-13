@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\itens (2).png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\itens (2).png" />
+  </ItemGroup>
+
+</Project>

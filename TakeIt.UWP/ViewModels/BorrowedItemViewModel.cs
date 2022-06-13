@@ -12,7 +12,7 @@ namespace TakeIt.UWP.ViewModels
     public class BorrowedItemViewModel : ViewModelBase
     {
         public int ID { get; set; }
-        private string imagePath;
+        private readonly string imagePath;
 
         private string name;
         public string Name

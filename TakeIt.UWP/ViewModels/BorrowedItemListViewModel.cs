@@ -15,7 +15,7 @@ namespace TakeIt.UWP.ViewModels
 {
     public class BorrowedItemListViewModel : ViewModelBase
     {
-        private AppShell _currentAppShell;
+        private readonly AppShell _currentAppShell;
         private readonly IBorrowedItemServiceUWP <BorrowedItem> _borrowedItemService;
         private readonly IBorrowedItemRepository<BorrowedItem> _borrowedItemRepository = new BorrowedItemRepository<BorrowedItem>();
 
@@ -33,7 +33,7 @@ namespace TakeIt.UWP.ViewModels
         public BorrowedItemListViewModel(AppShell currentAppShell)
         {
             _currentAppShell = currentAppShell;
-            _borrowedItemService = new BorrowedItemService<BorrowedItem>(_borrowedItemRepository);
+            _borrowedItemService = new BorrowedItemServiceUWP<BorrowedItem>(_borrowedItemRepository);
             InitializeItems();
 
         }

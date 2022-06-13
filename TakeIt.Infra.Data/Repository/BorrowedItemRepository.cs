@@ -67,7 +67,7 @@ namespace TakeIt.Infra.Data.Repository
             }
         }
 
-        public async Task<bool> UpdateAsync(TEntity product)
+        public bool UpdateAsync(TEntity product)
         {
             try
             {

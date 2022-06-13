@@ -124,7 +124,7 @@
       <DependentUpon>AppShell.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\BorrowedItemService.cs" />
+    <Compile Include="Services\BorrowedItemServiceUWP.cs" />
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="ViewModels\BorrowedItemFormViewModel.cs" />
     <Compile Include="ViewModels\BorrowedItemListViewModel.cs" />

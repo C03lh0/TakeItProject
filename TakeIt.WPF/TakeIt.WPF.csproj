@@ -166,7 +166,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\DateTimeConverter.cs" />
-    <Compile Include="Services\BorrowedItemService.cs" />
+    <Compile Include="Services\BorrowedItemServiceWPF.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Page Include="MainWindow.xaml">

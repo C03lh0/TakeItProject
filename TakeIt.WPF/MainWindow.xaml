@@ -36,12 +36,12 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Orientation="Horizontal" Grid.Column="0" Margin="0,5,0,0">
-                    <Canvas Height="30" Width="50">
+                    <Canvas Margin="20,0,0,0" Height="51" Width="60">
                         <Canvas.Background>
                             <ImageBrush ImageSource="Assets/itens (2).png" Stretch="Uniform"/>
                         </Canvas.Background>
                     </Canvas>
-                    <TextBlock Text="Take It" Style="{StaticResource StyleLogoType}" FontFamily="Microsoft YaHei UI"/>
+                    <TextBlock Padding="5" Text="Take It" Style="{StaticResource StyleLogoType}" FontFamily="Microsoft YaHei UI"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right" Margin="0,5,0,0">
@@ -90,9 +90,9 @@
 
         </Border>
         <StackPanel Margin="0,20" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
-            <Button Margin="0,0,100,0" Content="Abrir Lista" MaxWidth="200" Command="{Binding OpenList}" Style="{StaticResource mainButton}"/>
+            <Button Margin="0,0,100,0" Content="Minha Lista" MaxWidth="200" Command="{Binding OpenList}" Style="{StaticResource mainButton}"/>
             <Button Margin="0,0,100,0" Content="Recarregar" MaxWidth="200" Command="{Binding RefreshWindow}" Style="{StaticResource mainButton}"/>
-            <Button Margin="0,0,0,0" Content="Cadastrar" MaxWidth="200" Command="{Binding RegisterBorrowedItem}" Style="{StaticResource mainButton}"/>
+            <Button Margin="0,0,0,0" Content="Adicionar" MaxWidth="200" Command="{Binding AddItem}" Style="{StaticResource mainButton}"/>
         </StackPanel>
     </Grid>
 </Window>

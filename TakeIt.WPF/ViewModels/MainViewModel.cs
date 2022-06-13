@@ -26,12 +26,12 @@ namespace TakeIt.ViewModels
     public class MainViewModel : ViewModelBase
     {
         private readonly int _maximumItems;
+        public Command AddItem { get; private set; }
         public Command OpenList { get; private set; }
         public Command RefreshWindow { get; private set; }
-        public Command RegisterBorrowedItem { get; private set; }
         public ObservableCollection<BorrowedItem> ListBorrowedItens { get; set; }
         private readonly IBorrowedItemService<BorrowedItem> _borrowedItemService;
-        private readonly IBorrowedItemRepository<BorrowedItem> _borrowedItemRepository = new BorrowedItemRepository<BorrowedItem>();
+        private readonly IBorrowedItemRepository<BorrowedItem> _borrowedItemRepository;
 
         private string thumbnail;
         public string Thumbnail
@@ -47,11 +47,12 @@ namespace TakeIt.ViewModels
         public MainViewModel()
         {
             _maximumItems = 5;
-            OpenList = new Command(ShowList);
-            RegisterBorrowedItem = new Command(Register);
+            AddItem = new Command(AddBorrowedITem);
+            OpenList = new Command(ShowListBorrowedItem);
             RefreshWindow = new Command(GetAllListBorrwedItem);
-            _borrowedItemService = new BorrowedItemService<BorrowedItem>(_borrowedItemRepository, _maximumItems);
             ListBorrowedItens = new ObservableCollection<BorrowedItem>();
+            _borrowedItemRepository = new BorrowedItemRepository<BorrowedItem>();
+            _borrowedItemService = new BorrowedItemServiceWPF<BorrowedItem>(_borrowedItemRepository, _maximumItems);
             GetAllListBorrwedItem();
         }
 
@@ -73,12 +74,12 @@ namespace TakeIt.ViewModels
             }
         }
 
-        public void Register()
+        public void AddBorrowedITem()
         {
             Process.Start($"com.takeituwp://?page={PageTokens.BorrowedItemFormView}");
         }
 
-        public void ShowList()
+        public void ShowListBorrowedItem()
         {
             Process.Start($"com.takeituwp://?page={PageTokens.BorrowedItemListView}");
         }

@@ -8,12 +8,12 @@ using TakeIt.Domain.Interface;
 
 namespace TakeIt.WPF.Services
 {
-    public class BorrowedItemService<TEntity> : IBorrowedItemService<TEntity> where TEntity : BaseEntity
+    public class BorrowedItemServiceWPF<TEntity> : IBorrowedItemService<TEntity> where TEntity : BaseEntity
     {
         private readonly int _maxItem;
         private readonly IBorrowedItemRepository<TEntity> _borrowedItemRepository;
 
-        public BorrowedItemService(IBorrowedItemRepository<TEntity> borrowedItemRepository, int maxItem)
+        public BorrowedItemServiceWPF(IBorrowedItemRepository<TEntity> borrowedItemRepository, int maxItem)
         {
             _maxItem = maxItem;
             _borrowedItemRepository = borrowedItemRepository;

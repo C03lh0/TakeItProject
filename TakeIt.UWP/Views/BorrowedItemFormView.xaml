@@ -53,7 +53,7 @@
                     <TextBlock Margin="170,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" TextAlignment="Right" Foreground="Black">
                         <Run Text="Restam "/>
                         <Run Text="{x:Bind ViewModel.DaysLeftForReturn}"/>
-                        <Run Text=" para a devolução."/>
+                        <Run Text=" dias para a devolução."/>
                     </TextBlock>
                 </StackPanel>
             </StackPanel>
@@ -78,7 +78,7 @@
         <StackPanel Grid.Row="2" Margin="302,0,0,-6" VerticalAlignment="Bottom" HorizontalAlignment="Left" Orientation="Horizontal">
             <Button Style="{StaticResource MainButton}" Margin="0,0,100,0" Foreground="White" Content="Adicionar" MaxWidth="200" CornerRadius="6" Click="{x:Bind ViewModel.AddItem}" Visibility="{x:Bind ViewModel.VisibilityAddButton, Mode=OneWay}"/>
             <Button Style="{StaticResource MainButton}" Margin="0,0,100,0" Foreground="White" Content="Atualizar" MaxWidth="200" CornerRadius="6" Click="{x:Bind ViewModel.UpdateItem}" Visibility="{x:Bind ViewModel.VisibilityUpdateAndDeleteButton, Mode=OneWay}"/>
-            <Button Style="{StaticResource MainButton}" Margin="0,0,100,0" Foreground="White" Content="Deletar" MaxWidth="200" CornerRadius="6" Click="{x:Bind ViewModel.DeleteItem}" Visibility="{x:Bind ViewModel.VisibilityUpdateAndDeleteButton, Mode=OneWay}"/>
+            <Button Style="{StaticResource MainButton}" Margin="0,0,100,0" Foreground="White" Content="Devolvido" MaxWidth="200" CornerRadius="6" Click="{x:Bind ViewModel.DeleteItem}" Visibility="{x:Bind ViewModel.VisibilityUpdateAndDeleteButton, Mode=OneWay}"/>
             <Button Style="{StaticResource MainButton}" Margin="0,0,0,0" Foreground="White" Content="Cancelar" MaxWidth="200" CornerRadius="6" Click="{x:Bind ViewModel.Cancel}"/>
         </StackPanel>
         

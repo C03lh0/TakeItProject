@@ -38,7 +38,10 @@
                     </TextBlock>
                 </StackPanel>
                 <TextBlock Padding="5" Grid.Column="2" Text="{x:Bind Description}" TextAlignment="Left" Foreground="Black" FontFamily="Segoe UI" FontWeight="SemiBold" TextWrapping="Wrap" FontSize="12"/>
-                <TextBlock Grid.Column="3" Foreground="Black" Text="{x:Bind RegistrationDate}" VerticalAlignment="Bottom" Margin="20,0,0,0" FontFamily="Segoe UI" FontWeight="Normal" FontSize="12"/>
+                <TextBlock Grid.Column="3" Foreground="Black" VerticalAlignment="Bottom" Margin="20,0,0,0" FontFamily="Segoe UI" FontWeight="Normal" FontSize="12">
+                    <Run Text="Data de Registro: "/>
+                    <Run Text="{x:Bind RegistrationDate}"/>
+                </TextBlock>
             </Grid>
         </DataTemplate>
     </Page.Resources>

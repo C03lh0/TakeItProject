@@ -87,7 +87,7 @@ namespace TakeIt.UWP.ViewModels
             description = borrowedItem.Description;
             loanDate = borrowedItem.LoanDate.ToString("d");
             returnDate = borrowedItem.ReturnDate.ToString("d");
-            registrationDate = borrowedItem.RegistrationDate.ToString("D");
+            registrationDate = borrowedItem.RegistrationDate.ToString("d");
             imagePath = borrowedItem.ImagePath;
         }
 
